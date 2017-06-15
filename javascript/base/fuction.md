@@ -144,6 +144,7 @@ function test() {
 }
 ```
 **随着函数使用场合的不同, this的值会发生变化。但是有一个总的原则，那就是this值的是，调用函数的那个对象。**
+
 也就是
 
 In JavaScript this always refers to the “owner” of the function **we're executing**, or rather, to the object that a function is a method of.
