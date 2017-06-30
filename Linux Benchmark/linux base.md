@@ -1,3 +1,6 @@
+### tmpfs
+tmpfs,临时文件系统，是一种基于内存的文件系统，它和虚拟磁盘ramdisk比较类似像，但不完全相同，和ramdisk一样，tmpfs可以使用RAM，但它也可以使用swap分区来存储，而且传统的ramdisk是个块设备，要用mkfs来格式化它，才能真正地使用它；而tmpfs是一个文件系统，并不是块设备，只是安装它，就可以使用了。tmpfs是最好的基于RAM的文件系统。
+
 ### runlevel
 > runlevel - Print previous and current SysV runlevel
 ```
@@ -80,7 +83,7 @@ loop0p1 : 0 41940992 /dev/loop0 2048
 # losetup -f
 /dev/loop0
 # losetup /dev/loop0 rhel7.2.img
-# ll /images/sso/
+# ll /images/tmp/
 total 6705768
 -rw-r--r--. 1 root root 21474836480 Apr 26 14:19 rhel7.2.img
 -rw-r--r--. 1 root root  3263703040 Apr 26 14:31 rhel7.2.img.dump
@@ -92,7 +95,7 @@ loop0p1 : 0 41940992 /dev/loop0 2048
 
 
 # mv rhel7.2.img rhel7.2.img.bak_20170426_1436
-# ls /images/sso/
+# ls /images/tmp/
 rhel7.2.img.bak_20170426_1436  rhel7.2.img.dump
 # losetup -a
 # losetup -l /dev/loop0
@@ -101,7 +104,7 @@ NAME       SIZELIMIT OFFSET AUTOCLEAR RO BACK-FILE
 ```
 ### image作成
 ```
-# dd if=/dev/zero of=/images/sso/rhel7.2.img bs=512M count=40
+# dd if=/dev/zero of=/images/tmp/rhel7.2.img bs=512M count=40
 40+0 records in
 40+0 records out
 21474836480 bytes (21 GB) copied, 67.5232 s, 318 MB/s
@@ -110,7 +113,7 @@ NAME       SIZELIMIT OFFSET AUTOCLEAR RO BACK-FILE
 ```
 # losetup -f
 /dev/loop0
-# losetup /dev/loop0 /images/sso/rhel7.2.img
+# losetup /dev/loop0 /images/tmp/rhel7.2.img
 # kpartx -l /dev/loop0
 
 
@@ -175,7 +178,7 @@ Writing superblocks and filesystem accounting information: done
 # mount /dev/mapper/loop0p1 /mnt_20170422_122945
 # cd /mnt_20170422_122945
 
-[root@localhost mnt_20170422_122945]# restore -rf /images/sso/rhel7.2.img.dump
+[root@localhost mnt_20170422_122945]# restore -rf /images/tmp/rhel7.2.img.dump
 restore: ./lost+found: File exists
 [root@localhost mnt_20170422_122945]# rm -f restoresymtable
 [root@localhost mnt_20170422_122945]#
@@ -186,9 +189,9 @@ restore: ./lost+found: File exists
 # rmdir /mnt_20170422_122945
 # kpartx -d /dev/loop0
 # losetup -d /dev/loop0
-# ls /images/sso/
-# mkdir -p /home/master_latest/domU/20170426_145500
-# gzip -c /images/sso/rhel7.2.img > /home/master_latest/domU/20170426_145500/rhel7.2.img.gz
-# ll /home/master_latest/domU/20170426_145500/rhel7.2.img.gz
--rw-r--r--. 1 root root 1366027699 Apr 26 15:02 /home/master_latest/domU/20170426_145500/rhel7.2.img.gz
+# ls /images/tmp/
+# mkdir -p /home/latest/domU/20170426_145500
+# gzip -c /images/tmp/rhel7.2.img > /home/latest/domU/20170426_145500/rhel7.2.img.gz
+# ll /home/latest/domU/20170426_145500/rhel7.2.img.gz
+-rw-r--r--. 1 root root 1366027699 Apr 26 15:02 /home/latest/domU/20170426_145500/rhel7.2.img.gz
 ```
