@@ -195,3 +195,14 @@ restore: ./lost+found: File exists
 # ll /home/latest/domU/20170426_145500/rhel7.2.img.gz
 -rw-r--r--. 1 root root 1366027699 Apr 26 15:02 /home/latest/domU/20170426_145500/rhel7.2.img.gz
 ```
+
+
+`grep -rnIF "proc_stat" *`
+
+
+export PYTHONIOENCODING=UTF-8
+https://docs.python.org/2/using/cmdline.html#envvar-PYTHONIOENCODING
+
+
+查看系统进程的启动时间，运行时间等
+`ps -A -opid,stime,etime,args`
