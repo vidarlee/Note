@@ -1,17 +1,17 @@
 # scrapy使用笔记
 
-**scrapy是目前比较流行的爬虫框架，另外一个比较有名的爬虫框架是BeautifulSoup，虽然没有用过BeautifulSoup，但scrapy的优点是速度快，因此先着手学习scrapy。（之前都是用requests来爬网站）**
+scrapy是目前比较流行的爬虫框架，另外一个比较有名的爬虫框架是BeautifulSoup，虽然没有用过BeautifulSoup，但scrapy的优点是速度快，因此先着手学习scrapy。（之前都是用requests来爬网站）
 
 ## scrapy安装
 _scrapy的安装步骤这里就先省略，可以查看官网_
 
-Link: [scrapy官网](https://doc.scrapy.org/en/latest/intro/install.html)
+[scrapy官网](https://doc.scrapy.org/en/latest/intro/install.html)
 
 
 ## 创建scrapy工程
-**既然是框架，那么一般都以创建project为起点，来开始工作的。今天用爬取历史温度为任务开展学习**
+既然是框架，那么一般都以创建project为起点，来开始工作的。今天用爬取历史温度为任务开展学习
 
-Link: [目标网址](http://weather.uwyo.edu/upperair/np.html)
+[目标网址](http://weather.uwyo.edu/upperair/np.html)
 
 ```
 $ scrapy startproject temp
@@ -25,7 +25,7 @@ You can start your first spider with:
 ```
 
 ## 创建爬虫类
-**具体怎么执行爬虫逻辑，需要在spiders目录下定义相关的类来实现**
+具体怎么执行爬虫逻辑，需要在spiders目录下定义相关的类来实现
 ```
 $ pwd
 /home/vagrant/scrapy/temp/temp/spiders
@@ -34,7 +34,7 @@ __init__.py  __pycache__
 $ vim temp_spider.py
 ```
 
-**具体代码如下：**
+具体代码如下：
 
 ```
 import calendar
@@ -115,8 +115,8 @@ class TempSpider(scrapy.Spider):
             yield item
 ```
 
-### 设置代理
-**如果连接互联网需要设置代理，那么在linux下面设置好http或者https代理的环境变量即可**
+## 设置代理
+如果连接互联网需要设置代理，那么在linux下面设置好http或者https代理的环境变量即可：
 ```
 export http_proxy='xxxxxxxxx'
 export https_proxy='xxxxxxxx'
@@ -141,13 +141,13 @@ $ scrapy crawl temp
 ```
 
 ## 数据保存
-**可以保存成为CSV，json，xml等，本文保存为CSV。**
-**有两种方式可以进行保存：**
+可以保存成为CSV，json，xml等，本文保存为CSV。
+有两种方式可以进行保存：
 - 参数-o -t指定输出
 - 通过Pipeline自定义输出
 ***
 
-- 参数-o -t指定输出
+**参数-o -t指定输出**
 
   ```
   $ scrapy crawl temp -o cityname.csv -t csv
@@ -176,15 +176,15 @@ $ scrapy crawl temp
    1.2,Ostrov Kotelnyj,2.0,,uwyo.edu,1973-08-23,np,21432
   ```
 
-**多次运行，可以看出，这样输出保存的CSV文件，里面字段的顺序都是随机的，如果需要按照自己指定的顺序保存到CSV文件，则需要采用下面Pipeline的方式**
+多次运行，可以看出，这样输出保存的CSV文件，里面字段的顺序都是随机的，如果需要按照自己指定的顺序保存到CSV文件，则需要采用下面Pipeline的方式
 
-- 通过Pipeline自定义输出
+**通过Pipeline自定义输出**
 
-**Pipeline的方式其实就是利用Item Exporter来保存Item到指定的文件或者数据库。scrapy提供了好几种Item Exporter：BaseItemExporter，XMLItemExporter， CsvItemExporter等等。要采用Pipeline的方式保存，则需要按照以下几步来进行。参考官网**
-Link: [Item Exporters](https://doc.scrapy.org/en/latest/topics/exporters.html#using-item-exporters)
+Pipeline的方式其实就是利用Item Exporter来保存Item到指定的文件或者数据库。scrapy提供了好几种Item Exporter：BaseItemExporter，XMLItemExporter， CsvItemExporter等等。要采用Pipeline的方式保存，则需要按照以下几步来进行。参考官网：
+[Item Exporters](https://doc.scrapy.org/en/latest/topics/exporters.html#using-item-exporters)
 
 ### 在pipelines.py文件中定义相关的类
-**注意，类中可以包含以下函数**
+注意，类中可以包含以下函数
  - open_spider 爬虫开始时执行的操作在这个函数中定义
  - close_spider 爬虫结束时需要执行的操作在这个函数中定义
  - process_item 对于每个item需要执行的操作在这个函数中定义
@@ -195,7 +195,7 @@ Link: [Item Exporters](https://doc.scrapy.org/en/latest/topics/exporters.html#us
  - finish_exporting() 结束导出，此外还需要执行关闭文件.file.close()等。
 
 ### 使自定义的Pipeline有效
-**将定义的class追加到settings.py中的ITEM_PIPELINES设定中**
+将定义的class追加到settings.py中的ITEM_PIPELINES设定中
 ```
 ITEM_PIPELINES = {
 'tutorial.pipelines.TutorialPipeline': 300,
@@ -204,7 +204,7 @@ ITEM_PIPELINES = {
 }
 ```
 
-**数字可以指定1-1000，数字越小越优先执行**
+数字可以指定1-1000，数字越小越优先执行
 
 ***
 - Pipeline例
@@ -249,9 +249,7 @@ class TutorialPipeline(object):
         return item
 ```
 
-**注意：fields_to_export可以作为参数传递给CsvItemExporter，以定义字段的输出顺序**
-
-### 数据库的
+注意：fields_to_export可以作为参数传递给CsvItemExporter，以定义字段的输出顺序
 
 ## Debug或者调试
 - scrapy parse --spider=temp -c <function name> -d 2 <url>
