@@ -252,5 +252,5 @@ class TutorialPipeline(object):
 注意：fields_to_export可以作为参数传递给CsvItemExporter，以定义字段的输出顺序
 
 ## Debug或者调试
-- scrapy parse --spider=temp -c <function name> -d 2 <url>
-- scrapy shell <url>
+- scrapy parse --spider=temp -c function_name -d 2 url
+- scrapy shell url
