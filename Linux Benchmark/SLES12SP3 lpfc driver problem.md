@@ -166,3 +166,8 @@ COPYING        GNUmakefile  lpfc.h    lpfc_bsg.c   lpfc_compat.h  lpfc_ct.c    l
 Makefile         lpfc_attr.c  lpfc_bsg.h     lpfc_ct.c       lpfc_disc.h     lpfc_hw.h       lpfc_init.c    lpfc_mem.c   lpfc_nvme.c       lpfc_nvmet.h  lpfc_sli.c   lpfc_version.h
 built-in.o       lpfc_attr.h  lpfc_compat.h  lpfc_debugfs.c  lpfc_els.c      lpfc_hw4.h      lpfc_logmsg.h  lpfc_nl.h    lpfc_nvme.h       lpfc_scsi.c   lpfc_sli.h   lpfc_vport.c
 ```
+
+开始编译内核：
+```
+
+```
